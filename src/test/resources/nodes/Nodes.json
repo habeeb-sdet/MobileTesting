@@ -1,18 +1,19 @@
 {
-  "Nodes" : [
+  "android" : [
     {
-      "platform" : "android",
       "osVersion" : "14.0",
-      "systemPort" : "8110",
-      "mjpegServerPort" : "9100",
+      "systemPort" : 8110,
+      "mjpegServerPort" : 9100,
       "mjpegScreenshotUrl" : "http://localhost:9100"
     },
     {
-      "platform" : "android",
       "osVersion" : "9.0",
-      "systemPort" : "8220",
-      "mjpegServerPort" : "9110",
+      "systemPort" : 8220,
+      "mjpegServerPort" : 9110,
       "mjpegScreenshotUrl" : "http://localhost:9110"
     }
+  ],
+  "ios": [
+
   ]
 }

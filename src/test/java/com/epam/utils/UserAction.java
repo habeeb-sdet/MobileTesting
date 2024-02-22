@@ -9,10 +9,8 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 import static com.epam.constants.TimeOuts.ELEMENT_VISIBILITY_TIME_OUT;
 
@@ -96,12 +94,12 @@ public class UserAction extends ElementWait{
         int startY = windowSize.getHeight()/2;
 
         long startTime = System.currentTimeMillis();
-        while(System.currentTimeMillis() - startTime <= 1000000){
+        while(System.currentTimeMillis() - startTime <= (2*60*1000)){
             Sequence sequence = new Sequence(finger1, 0)
                     .addAction(finger1.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), startX, startY))
                     .addAction(finger1.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
                     .addAction(new Pause(finger1, Duration.ofMillis(200)))
-                    .addAction(finger1.createPointerMove(Duration.ofSeconds(1), PointerInput.Origin.viewport(), startX, startY/4))
+                    .addAction(finger1.createPointerMove(Duration.ofMillis(200), PointerInput.Origin.viewport(), startX, startY/4))
                     .addAction(finger1.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
 
             Driver.getDriver().perform(Collections.singleton(sequence));
@@ -183,61 +181,5 @@ public class UserAction extends ElementWait{
 
     public static void clearInputBox(WebElement element){
         element.clear();
-    }
-
-
-
-    public static void scrollToElement(WebElement element){
-        Dimension windowSize = Driver.getDriver().manage().window().getSize();
-        PointerInput finger1 = new PointerInput(PointerInput.Kind.TOUCH, "Finger 1");
-        int startX = windowSize.getWidth()/2;
-        int startY = windowSize.getHeight()/2;
-
-        long startTime = System.currentTimeMillis();
-        while(System.currentTimeMillis() - startTime <= 1000000){
-            Sequence sequence = new Sequence(finger1, 0)
-                    .addAction(finger1.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), startX, startY))
-                    .addAction(finger1.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
-                    .addAction(new Pause(finger1, Duration.ofMillis(200)))
-                    .addAction(finger1.createPointerMove(Duration.ofSeconds(1), PointerInput.Origin.viewport(), startX, startY/4))
-                    .addAction(finger1.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
-
-            Driver.getDriver().perform(Collections.singleton(sequence));
-
-            if(isElementVisible(element,Duration.ofSeconds(5))){
-                return;
-            }
-        }
-
-        throw new NoSuchElementException(element + " not found");
-    }
-
-    public static void checkAndScrollToElement(WebElement element){
-        if(isElementVisible(element, Duration.ofSeconds(10))){
-            return;
-        }
-
-        scrollToElement(element);
-    }
-
-    public static void tap(WebElement element){
-        Point elementLocation = element.getLocation();
-        Dimension dimension = element.getSize();
-        int x = elementLocation.getX() + dimension.getWidth()/2;
-        int y = elementLocation.getY() + dimension.getHeight()/2;
-
-        PointerInput finger1 = new PointerInput(PointerInput.Kind.TOUCH, "Finger 1");
-        Sequence sequence = new Sequence(finger1, 0)
-                .addAction(finger1.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), x, y))
-                .addAction(finger1.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
-                .addAction(new Pause(finger1, Duration.ofMillis(200)))
-                .addAction(finger1.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
-
-        Driver.getDriver().perform(Collections.singleton(sequence));
-    }
-
-    public static void scrollToElementAndTap(WebElement element){
-        checkAndScrollToElement(element);
-        tap(element);
     }
 }

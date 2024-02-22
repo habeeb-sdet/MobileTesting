@@ -2,6 +2,7 @@ package com.epam.pages;
 
 import com.epam.drivermanager.Driver;
 import com.epam.utils.locators.AndroidLocator;
+import com.epam.utils.locators.IOSLocator;
 import com.epam.utils.locators.Locator;
 import com.epam.utils.UserAction;
 import com.epam.utils.reporting.ExtentReport;
@@ -19,24 +20,31 @@ public class Products {
     private static Logger logger = LogManager.getLogger(Products.class);
 
     @AndroidLocator(type = ACCESSIBILITY_ID, value = "test-Menu")
+    @IOSLocator(type = XPATH, value = "//XCUIElementTypeOther[@name='test-Menu']")
     private By menuIcon;
 
     @AndroidLocator(type = ACCESSIBILITY_ID, value = "test-Cart")
+    @IOSLocator(type = XPATH, value = "//XCUIElementTypeOther[@name='test-Cart']")
     private By cartIcon;
 
     @AndroidLocator(type = ACCESSIBILITY_ID, value = "test-Cart drop zone")
+    @IOSLocator(type = XPATH, value = "//XCUIElementTypeOther[@name='headerContainer']")
     private By testCartDropZone;
 
     @AndroidLocator(type = XPATH, value = "//android.widget.TextView[@text='PRODUCTS']")
+    @IOSLocator(type = XPATH, value = "//XCUIElementTypeOther[@name='PRODUCTS']")
     private By productsHeader;
 
     @AndroidLocator(type = ACCESSIBILITY_ID, value = "test-Modal Selector Button")
+    @IOSLocator(type = XPATH, value = "//XCUIElementTypeOther[@name='test-Modal Selector Button']")
     private By filterIcon;
 
     @AndroidLocator(type = XPATH, value = "//android.widget.TextView[@text='ADD TO CART']")
+    @IOSLocator(type = XPATH, value = "//XCUIElementTypeOther[@name='test-ADD TO CART']")
     private By addToCart;
 
     public By getProductLocator(String productName){
+        By path = By.xpath("//XCUIElementTypeStaticText[@name='test-Item title' and @label='" + productName + "']");
         return By.xpath("//android.widget.TextView[@content-desc='test-Item title' " +
                 "and @text='" + productName + "']");
     }

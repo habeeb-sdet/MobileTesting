@@ -1,7 +1,5 @@
 package com.epam.utils.reporting;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.LoggerContext;
 import com.epam.drivermanager.Driver;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;

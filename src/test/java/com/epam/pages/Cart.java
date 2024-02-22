@@ -1,6 +1,8 @@
 package com.epam.pages;
 
+import com.epam.constants.TestProps;
 import com.epam.utils.locators.AndroidLocator;
+import com.epam.utils.locators.IOSLocator;
 import com.epam.utils.locators.Locator;
 import com.epam.utils.UserAction;
 import com.epam.utils.reporting.ExtentReport;
@@ -9,7 +11,10 @@ import com.epam.utils.reporting.Logger;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
+import static com.epam.constants.DriverType.ANDROID;
+import static com.epam.constants.DriverType.IOS;
 import static com.epam.constants.LocatorType.ACCESSIBILITY_ID;
+import static com.epam.constants.LocatorType.XPATH;
 
 public class Cart extends Page {
 
@@ -28,16 +33,17 @@ public class Cart extends Page {
     private By itemDetail;
 
     @AndroidLocator(type = ACCESSIBILITY_ID, value = "test-CHECKOUT")
+    @IOSLocator(type = XPATH, value = "//XCUIElementTypeOther[@name='test-CHECKOUT']")
     private By checkOut;
 
-    private String itemName = "//android.widget.TextView[@text='%s']";
-    private String itemPrice = "/../following-sibling::android.view.ViewGroup[@content-desc='test-Price']/android.widget.TextView";
+//    private String itemName = ;
+//    private String itemPrice = ;
 
     public Cart(){
         Locator.initElements(this);
     }
 
-    private By getItemNameLocator(String itemName){
+    /*private By getItemNameLocator(String itemName){
         String path = String.format(this.itemName, itemName);
         String message = "Item Name Locator : " + itemName;
         logger.info(message);
@@ -51,13 +57,41 @@ public class Cart extends Page {
         logger.info(message);
         ExtentReport.log(message);
         return By.xpath(itemNamePath + itemPrice);
+    }*/
+
+    private String getItemNameLocator(String itemName){
+        String path = null;
+        if(TestProps.getPlatform() == IOS){
+            path = "//XCUIElementTypeStaticText[@name='" + itemName + "']";
+        }else if(TestProps.getPlatform() == ANDROID){
+            path = "//android.widget.TextView[@text='" + itemName + "']";
+        }
+
+        return path;
+    }
+
+    private String getItemPriceLocator(String itemName){
+        String itemNameLocator = getItemNameLocator(itemName);
+        String path = null;
+        if(TestProps.getPlatform() == IOS){
+            path = itemNameLocator + "/../following-sibling::XCUIElementTypeOther/XCUIElementTypeStaticText";
+        }else if(TestProps.getPlatform() == ANDROID){
+            path = itemNameLocator + "/../following-sibling::android.view.ViewGroup[@content-desc='test-Price']/android.widget.TextView";
+        }
+
+        return path;
     }
 
 
     public Cart validateItemDetails(String itemName, String expItemPrice){
-        By itemNameLocator = getItemNameLocator(itemName);
-        By itemPriceLocator = getItemPriceLocator(itemName);
-        String actItemPrice = UserAction.getElement(itemPriceLocator).getText();
+        By itemNameLocator = By.xpath(getItemNameLocator(itemName));
+        By itemPriceLocator = By.xpath(getItemPriceLocator(itemName));
+        String actItemPrice = null;
+        if(TestProps.getPlatform() == IOS){
+            actItemPrice = UserAction.getElement(itemPriceLocator).getAttribute("value");
+        }else if(TestProps.getPlatform() == ANDROID){
+            actItemPrice = UserAction.getElement(itemPriceLocator).getText();
+        }
         String message = "Validating if " + itemName + "is visible";
         logger.info(message);
         ExtentReport.log(message);

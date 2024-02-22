@@ -10,7 +10,7 @@ public class LogManager {
     }
 
     public static Level getLogLevel(){
-        String logLevel = TestProps.LOG_LEVEL.toUpperCase();
+        String logLevel = TestProps.getLogLevel().toUpperCase();
         Level level = null;
         switch (logLevel){
             case "INFO" : return Level.INFO;

@@ -4,11 +4,9 @@ import com.epam.utils.reporting.SystemLogs;
 import com.epam.utils.reporting.LogManager;
 import com.epam.utils.reporting.Logger;
 import com.epam.utils.reporting.VideoLog;
-import io.appium.java_client.AppiumDriver;
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
 
-import static com.epam.drivermanager.Driver.APPIUM_DRIVER_THREAD_LOCAL;
 
 public class SuiteListener implements ISuiteListener {
 
@@ -23,8 +21,6 @@ public class SuiteListener implements ISuiteListener {
 
     @Override
     public void onFinish(ISuite suite) {
-//        APPIUM_DRIVER_THREAD_LOCAL.
-
         logger.info("\n\t\t\t===== Execution Ended =====\n");
     }
 }

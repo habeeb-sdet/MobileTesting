@@ -1,6 +1,7 @@
 package com.epam.pages;
 
 import com.epam.utils.locators.AndroidLocator;
+import com.epam.utils.locators.IOSLocator;
 import com.epam.utils.locators.Locator;
 import com.epam.utils.UserAction;
 import com.epam.utils.reporting.ExtentReport;
@@ -22,27 +23,35 @@ public class CheckOut {
     private static Logger logger = LogManager.getLogger(CheckOut.class);
 
     @AndroidLocator(type = ACCESSIBILITY_ID, value = "test-First Name")
+    @IOSLocator(type = XPATH, value = "//XCUIElementTypeTextField[@name='test-First Name']")
     private By firstName;
 
     @AndroidLocator(type = ACCESSIBILITY_ID, value = "test-Last Name")
+    @IOSLocator(type = XPATH, value = "//XCUIElementTypeTextField[@name='test-Last Name']")
     private By lastName;
 
     @AndroidLocator(type = ACCESSIBILITY_ID, value = "test-Zip/Postal Code")
+    @IOSLocator(type = XPATH, value = "//XCUIElementTypeTextField[@name='test-Zip/Postal Code']")
     private By zipOrPostalCode;
 
-    @AndroidLocator(type = XPATH, value = "//android.widget.TextView[@text=\"CONTINUE\"]")
+    @AndroidLocator(type = XPATH, value = "//android.widget.TextView[@text='CONTINUE']")
+    @IOSLocator(type = XPATH, value = "//XCUIElementTypeOther[@name='test-CONTINUE']")
     private By continueCheckout;
 
     @AndroidLocator(type = ACCESSIBILITY_ID, value = "test-FINISH")
+    @IOSLocator(type = XPATH, value = "//XCUIElementTypeOther[@name='test-FINISH']")
     private By finishCheckout;
 
     @AndroidLocator(type = ACCESSIBILITY_ID, value = "test-CHECKOUT: COMPLETE!")
+    @IOSLocator(type = XPATH, value = "//XCUIElementTypeOther[@name='test-CHECKOUT: COMPLETE!']")
     private By checkOutCompleteInfo;
 
     @AndroidLocator(type = XPATH, value = "//android.widget.ScrollView[@content-desc='test-CHECKOUT: COMPLETE!']/android.view.ViewGroup/android.widget.TextView")
+    @IOSLocator(type = XPATH, value = "//XCUIElementTypeOther[contains(@name, 'THANK YOU FOR YOU ORDER')]/XCUIElementTypeStaticText")
     private By thankYouMessages;
 
     @AndroidLocator(type = ACCESSIBILITY_ID, value = "test-BACK HOME")
+    @IOSLocator(type = XPATH, value = "//XCUIElementTypeOther[@name='test-BACK HOME']")
     private By backHome;
 
     public CheckOut(){
@@ -80,6 +89,7 @@ public class CheckOut {
         String message = "Verify thank you message";
         logger.info(message);
         ExtentReport.log(message);
+        // Check if getText works for IOS and fix it
         List<WebElement> thankYouMessage = UserAction.getElements(this.thankYouMessages);
         UserAction.verifyText(thankYouMessage, Arrays.asList(THANK_YOU_HEADER, THANK_YOU_CONTENT));
         return this;

@@ -1,7 +1,7 @@
 package com.epam.drivermanager;
 
-import com.epam.constants.Commons;
 import com.epam.constants.TestProps;
+import com.epam.drivermanager.driver.IDriver;
 import com.epam.utils.reporting.LogManager;
 import com.epam.utils.reporting.Logger;
 import com.epam.constants.DriverType;
@@ -50,7 +50,7 @@ public class Driver {
     }
 
     public static DriverType getType(){
-        return TestProps.PLATFORM;
+        return TestProps.getPlatform();
     }
 
 }

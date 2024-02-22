@@ -6,19 +6,9 @@
         <listener class-name="com.epam.listeners.TestListener"/>
     </listeners>
 
-    <test name="Mobile Test Pixel 6">
-        <parameter name="device-name" value="emulator-5554"/>
-        <parameter name="Device Type" value="Android"/>
+    <test name="Swag Labs App Test">
         <classes>
             <class name="com.epam.tests.AppTests"/>
         </classes>
     </test>
-
-    <!--<test name="Mobile Test Pixel 4">
-        <parameter name="device-name" value="emulator-5556"/>
-        <parameter name="Device Type" value="Android"/>
-        <classes>
-            <class name="com.epam.tests.AppTwoTests"/>
-        </classes>
-    </test>-->
 </suite>

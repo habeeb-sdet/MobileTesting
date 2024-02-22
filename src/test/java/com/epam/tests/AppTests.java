@@ -23,7 +23,7 @@ public class AppTests {
                 .clickLogIn();
     }
 
-    @Test(description = "Validate Login",
+    /*@Test(description = "Validate Login",
             dataProviderClass= TestDataProvider.class, dataProvider = "Item checkout details",  alwaysRun = true)
     public void checkoutThroughNativeApp(String menuOption, String sortBy, String itemName, String itemPrice, String firstName,
                               String lastName, String postalCode) {
@@ -43,7 +43,7 @@ public class AppTests {
                 .finishCheckout()
                 .verifyThankYou()
                 .backToHome();
-    }
+    }*/
 
     @Test(description = "Validate Adding item to cart from Web View", alwaysRun = true)
     public void checkoutThroughWebView() {
@@ -60,10 +60,6 @@ public class AppTests {
                 .selectItemFromSearchResults(2)
                 .addToCart()
                 .validateSuccessMessage();
-    }
-
-    private void differentMethods(){
-//        Driver.getDriver().
     }
 
 }

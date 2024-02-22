@@ -1,20 +1,26 @@
 package com.epam.constants;
 
 import io.opentelemetry.api.internal.StringUtils;
+import lombok.Data;
+import lombok.Getter;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
 import static com.epam.constants.Commons.RESOURCES_DIR;
 
+@Data
 public class TestProps {
 
-    public static String TEST_INFRA_URL;
-    public static DriverType PLATFORM;
-    public static String OS_VERSION;
-    public static String LOG_LEVEL;
+    @Getter
+    private static TestSetUp.Platform testSetUp;
+    @Getter
+    private static DriverType platform;
+    @Getter
+    private static String osVersion;
+    @Getter
+    private static String logLevel;
 
     static {
         System.out.println("Reading properties file...");
@@ -29,19 +35,11 @@ public class TestProps {
         }
 
 
-        TEST_INFRA_URL = getProperty(properties, "testInfraUrl");
-        PLATFORM = DriverType.valueOf(getProperty(properties, "platform").toUpperCase());
-        OS_VERSION = getProperty(properties, "osVersion");
-        LOG_LEVEL = getProperty(properties, "logLevel");
+        testSetUp = TestSetUp.Platform.valueOf(getProperty(properties, "testSetup").toUpperCase());
+        platform = DriverType.valueOf(getProperty(properties, "platform").toUpperCase());
+        osVersion = getProperty(properties, "osVersion");
+        logLevel = getProperty(properties, "logLevel");
 
-
-
-        /*try(FileOutputStream fileOutputStream = new FileOutputStream(file)){
-            properties.store(fileOutputStream, "Updating properties file with user defined values");
-        } catch (IOException e) {
-            System.err.println("Error while updating prop file : " + e.getMessage());
-            System.exit(-1);
-        }*/
     }
 
     /**

@@ -13,12 +13,12 @@ import static com.epam.constants.Commons.USER_DIR;
 
 public class SystemLogs {
 
-    private static String logCatLogBasePath;
+    private static String logDirBasePath;
 
     public static void createLogCatLogsDir(){
-        logCatLogBasePath = USER_DIR + "\\logs\\android\\";
+        logDirBasePath = USER_DIR + "\\logs\\android\\";
         try {
-            FileUtils.forceMkdir(new File(logCatLogBasePath));
+            FileUtils.forceMkdir(new File(logDirBasePath));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -26,7 +26,7 @@ public class SystemLogs {
 
     public static void captureLogCatLogs(ITestResult result){
         List<LogEntry> logEntryList = Driver.getDriver().manage().logs().get("logcat").getAll();
-        String fileName = logCatLogBasePath + result.getMethod().getMethodName() + "_bugreport.txt";
+        String fileName = logDirBasePath + result.getMethod().getMethodName() + "_bugreport.txt";
         try {
             FileUtils.writeLines(new File(fileName), logEntryList, false);
         } catch (IOException e) {
@@ -47,7 +47,7 @@ public class SystemLogs {
         }
 
         try {
-            org.apache.commons.io.FileUtils.moveFileToDirectory(new File(downloadLoc), new File(logCatLogBasePath), true);
+            org.apache.commons.io.FileUtils.moveFileToDirectory(new File(downloadLoc), new File(logDirBasePath), true);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
