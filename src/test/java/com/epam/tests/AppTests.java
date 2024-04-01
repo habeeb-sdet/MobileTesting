@@ -1,11 +1,9 @@
 package com.epam.tests;
 
-import com.epam.drivermanager.Driver;
 import com.epam.pages.LogIn;
 import com.epam.pages.Products;
-import io.appium.java_client.android.AndroidDriver;
+import com.epam.utils.poc.MobileScenarios;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 
@@ -32,6 +30,7 @@ public class AppTests {
                 .validateProductPage()
                 .selectMenu()
                 .selectAllItems()
+                .addItemUsingDragAndDrop(itemName)
                 .sortItems(sortBy)
                 .selectItem(itemName)
                 .addToCart()
@@ -43,7 +42,7 @@ public class AppTests {
                 .finishCheckout()
                 .verifyThankYou()
                 .backToHome();
-    }*/
+    }
 
     @Test(description = "Validate Adding item to cart from Web View", alwaysRun = true)
     public void checkoutThroughWebView() {
@@ -60,6 +59,27 @@ public class AppTests {
                 .selectItemFromSearchResults(2)
                 .addToCart()
                 .validateSuccessMessage();
+    }*/
+
+    @Test(description = "Validate Adding item to cart from Web View", alwaysRun = true)
+    public void mobileScenariosPractice() {
+        String url = "https://www.amazon.in";
+        String itemToSearch = "Samsung Mobile M53";
+
+        Products products = new Products();
+        products
+                .selectMenu();
+
+        MobileScenarios mobileScenarios = new MobileScenarios();
+//        mobileScenarios.switchBetweenApps();
+//        mobileScenarios.readNotifications();
+//        mobileScenarios.getPerformanceData();
+//        mobileScenarios.putAppInBackground();
+//        mobileScenarios.enableWifi();
+//        mobileScenarios.unlockThePhone();
+//        mobileScenarios.permissions();
+
+        mobileScenarios.enableBluetooth();
     }
 
 }

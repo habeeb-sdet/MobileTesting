@@ -1,5 +1,7 @@
 package com.epam.pages;
 
+import com.epam.constants.DriverType;
+import com.epam.constants.TestProps;
 import com.epam.drivermanager.Driver;
 import com.epam.utils.locators.AndroidLocator;
 import com.epam.utils.locators.IOSLocator;
@@ -10,6 +12,7 @@ import com.epam.utils.reporting.LogManager;
 import com.epam.utils.reporting.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 
 import static com.epam.constants.LocatorType.ACCESSIBILITY_ID;
@@ -44,9 +47,13 @@ public class Products {
     private By addToCart;
 
     public By getProductLocator(String productName){
-        By path = By.xpath("//XCUIElementTypeStaticText[@name='test-Item title' and @label='" + productName + "']");
-        return By.xpath("//android.widget.TextView[@content-desc='test-Item title' " +
-                "and @text='" + productName + "']");
+        By path = null;
+        if(TestProps.getPlatform() == DriverType.IOS)
+            path =  By.xpath("//XCUIElementTypeStaticText[@name='test-Item title' and @label='" + productName + "']");
+        else if(TestProps.getPlatform() == DriverType.ANDROID)
+            path = By.xpath("//android.widget.TextView[@content-desc='test-Item title' " +
+                    "and @text='" + productName + "']");
+        return path;
     }
 
     public Products(){
@@ -97,7 +104,8 @@ public class Products {
         String message = "Click on Add To Cart";
         logger.info(message);
         ExtentReport.log(message);
-        UserAction.scrollToElementAndTap(addToCart);
+        UserAction.actionMethods(addToCart);
+//        UserAction.scrollToElementAndTap(addToCart);
         return this;
     }
 
@@ -116,5 +124,15 @@ public class Products {
         ExtentReport.log(message);
         UserAction.click(cartIcon);
         return new Cart();
+    }
+
+    public Products addItemUsingDragAndDrop(String productName){
+        By source = By.xpath("//android.widget.TextView[@content-desc='test-Item title' " +
+                "and @text='" + productName + "']/../android.view.ViewGroup[@content-desc='test-Drag Handle']");
+
+        By target =By.xpath("//*[@text='Drag here to add to cart!']");
+
+        UserAction.dragAndDrop(source, target);
+        return this;
     }
 }

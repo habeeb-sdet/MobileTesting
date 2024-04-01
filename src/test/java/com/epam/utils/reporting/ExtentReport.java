@@ -5,8 +5,10 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.markuputils.Markup;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.epam.drivermanager.Driver;
+import io.appium.java_client.chromium.ChromiumDriver;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestResult;
 
 import java.io.File;
@@ -56,7 +58,7 @@ public class ExtentReport {
     public static void logErrorAndAttachScreenShot(ITestResult result){
         extentTest.fail(result.getThrowable().getMessage());
         TakesScreenshot takesScreenshot = Driver.getDriver();
-        String screenShot = takesScreenshot.getScreenshotAs(OutputType.BASE64);
+        String screenShot = Driver.getDriver().getScreenshotAs(OutputType.BASE64);
         extentTest.addScreenCaptureFromBase64String(screenShot);
     }
 

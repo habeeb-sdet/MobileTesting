@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class Driver {
 
-    private static Logger logger = LogManager.getLogger(Driver.class);
+    private static final Logger logger = LogManager.getLogger(Driver.class);
     private static final ThreadLocal<IDriver> IDRIVER_THREAD_LOCAL = new ThreadLocal<>();
     public static final ThreadLocal<AppiumDriver> APPIUM_DRIVER_THREAD_LOCAL = new ThreadLocal<>();
 
@@ -23,7 +23,6 @@ public class Driver {
         IDriver driver = DriverFactory.get();
         IDRIVER_THREAD_LOCAL.set(driver);
         APPIUM_DRIVER_THREAD_LOCAL.set(driver.getDriver());
-
     }
 
     public static AppiumDriver getDriver(){

@@ -26,7 +26,7 @@ public class SystemLogs {
 
     public static void captureLogCatLogs(ITestResult result){
         List<LogEntry> logEntryList = Driver.getDriver().manage().logs().get("logcat").getAll();
-        String fileName = logDirBasePath + result.getMethod().getMethodName() + "_bugreport.txt";
+        String fileName = logDirBasePath + result.getMethod().getMethodName() + "_logcat.txt";
         try {
             FileUtils.writeLines(new File(fileName), logEntryList, false);
         } catch (IOException e) {
@@ -47,7 +47,7 @@ public class SystemLogs {
         }
 
         try {
-            org.apache.commons.io.FileUtils.moveFileToDirectory(new File(downloadLoc), new File(logDirBasePath), true);
+            FileUtils.moveFileToDirectory(new File(downloadLoc), new File(logDirBasePath), true);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

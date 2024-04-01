@@ -22,13 +22,17 @@ public class LogIn {
     private static Logger logger = LogManager.getLogger(LogIn.class);
 
     /*@AndroidFindBy(xpath = "//android.widget.EditText[@content-desc='test-Username']")
-    private WebElement username;
+    private WebElement username0;
 
     @AndroidFindBy(xpath = "//android.widget.EditText[@content-desc='test-Password']")
-    private WebElement password;
+    private WebElement password0;
 
     @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-LOGIN']")
-    private WebElement loginBtn;*/
+    @AndroidBy(xpath = "")
+    @AndroidFindAll({
+            @AndroidBy(id="")
+    })
+    private WebElement loginBtn0;*/
 
     @AndroidLocator(type = XPATH,  value= "//android.widget.EditText[@content-desc='test-Username']")
     @IOSLocator(type = XPATH,  value= "//XCUIElementTypeOther[@name='Username']")

@@ -6,6 +6,8 @@ import com.epam.drivermanager.driver.AndroidDeviceDriver;
 import com.epam.drivermanager.driver.IDriver;
 import com.epam.drivermanager.driver.IOSDeviceDriver;
 import com.epam.drivermanager.drivercapabilities.DriverCapabilities;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.openqa.selenium.remote.NoSuchDriverException;
 
 import java.net.MalformedURLException;
@@ -13,6 +15,7 @@ import java.net.URL;
 
 public class DriverFactory {
 
+    private static ThreadLocal<AppiumDriverLocalService> appiumDriverLocalServiceThreadLocal = new ThreadLocal<>();
     private DriverFactory(){}
 
     public static IDriver get() throws MalformedURLException {
@@ -38,10 +41,21 @@ public class DriverFactory {
         String url = null;
         switch (TestProps.getTestSetUp()){
             case SAUCE_LABS: url = TestSetUp.Url.getSAUCE_LAB_URL();break;
-            case LOCAL :
-            default: url = TestSetUp.Url.getLOCAL_HOST_URL();
+            case GRID : url = TestSetUp.Url.getGRID_URL();break;
+            case LOCAL_SERVICE:
+            default: url = startAppiumServiceAndGetUrl();
         }
         return url;
+    }
+
+    private static String startAppiumServiceAndGetUrl(){
+        AppiumServiceBuilder appiumServiceBuilder = new AppiumServiceBuilder();
+        appiumServiceBuilder.usingAnyFreePort();
+
+        AppiumDriverLocalService localService = AppiumDriverLocalService.buildService(appiumServiceBuilder);
+        localService.start();
+        appiumDriverLocalServiceThreadLocal.set(localService);
+        return localService.getUrl().toString();
     }
 
 }

@@ -78,7 +78,7 @@ public class Amazon extends UserAction {
         String message = "Searching item : " + item;
         logger.info(message);
         ExtentReport.log(message);
-        clearInputBox(searchBox);
+        clearInputBox(this.searchBox);
         type(this.searchBox, item);
         scrollToElementAndTap(this.searchBtn);
         if(isElementVisible(this.tapHereToLogIn)){

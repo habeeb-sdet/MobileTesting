@@ -40,4 +40,13 @@ public class ElementWait {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), waitTimeInSec);
         return wait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(parentElement, childLocator));
     }
+
+    public static WebElement waitForElementToBePresentAndGet(By locator){
+        return waitForElementToBeVisibleAndGet(locator, ELEMENT_VISIBILITY_TIME_OUT);
+    }
+
+    public static WebElement waitForElementToBePresentAndGet(By locator, Duration waitTimeInSec){
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), waitTimeInSec);
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
 }

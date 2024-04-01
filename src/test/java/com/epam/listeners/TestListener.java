@@ -62,7 +62,6 @@ public class TestListener implements ITestListener {
             logger.error(e.getMessage());
             throw new RuntimeException();
         }
-
         ExtentReport.initializeExtentReport();
     }
 

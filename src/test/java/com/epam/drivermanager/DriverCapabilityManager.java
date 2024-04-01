@@ -24,7 +24,8 @@ public class DriverCapabilityManager {
     private static AndroidDeviceCapabilities getAndroidCapabilities(){
         switch (TestProps.getTestSetUp()){
             case SAUCE_LABS: return new SauceLabAndroidCapabilities();
-            case LOCAL:
+            case GRID:
+            case LOCAL_SERVICE:
             default: return new LocalAndroidCapabilities();
         }
     }
@@ -32,7 +33,8 @@ public class DriverCapabilityManager {
     private static IosDeviceCapabilities getIOSCapabilities(){
         switch (TestProps.getTestSetUp()){
             case SAUCE_LABS: return new SauceLabIosCapabilities();
-            case LOCAL:
+            case GRID:
+            case LOCAL_SERVICE:
             default: return new LocalIosCapabilities();
         }
     }

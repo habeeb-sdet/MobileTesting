@@ -1,10 +1,9 @@
 package com.epam.utils;
 
 import com.epam.drivermanager.Driver;
+import io.appium.java_client.remote.SupportsContextSwitching;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Pause;
-import org.openqa.selenium.interactions.PointerInput;
-import org.openqa.selenium.interactions.Sequence;
+import org.openqa.selenium.interactions.*;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -156,6 +155,8 @@ public class UserAction extends ElementWait{
     }
 
     public static void switchContext(By locator, boolean isNativeContext){
+        SupportsContextSwitching contextSwitching = (SupportsContextSwitching) Driver.getDriver();
+
         if(isNativeContext){
             Driver.getContextHandler().context("NATIVE_APP");
             return;
@@ -181,5 +182,34 @@ public class UserAction extends ElementWait{
 
     public static void clearInputBox(WebElement element){
         element.clear();
+    }
+
+
+    public static void actionMethods(By locator){
+        Actions actions = new Actions(Driver.getDriver());
+
+        Dimension dimension = Driver.getDriver().manage().window().getSize();
+        int x = dimension.getWidth()/2;
+        int y = dimension.getHeight()/2;
+
+        actions.moveToLocation(x, y).clickAndHold().scrollByAmount(x, y/2).perform();
+
+//        actions.moveToElement(getPresentElement(locator)).perform();
+    }
+
+    public static void dragAndDrop(By source, By target){
+        Actions actions = new Actions(Driver.getDriver());
+        WebElement sourceElement = getElement(source);
+        WebElement targetElement = getElement(target);
+        actions.moveToElement(getElement(source)).clickAndHold().dragAndDrop(sourceElement, targetElement).perform();
+
+        actions.moveToElement(getElement(source)).clickAndHold().perform();
+        actions.pause(200).perform();
+        actions.dragAndDrop(getElement(source), getElement(target)).perform();
+
+    }
+
+    public static WebElement getPresentElement(By locator){
+        return waitForElementToBePresentAndGet(locator, Duration.ofSeconds(5));
     }
 }

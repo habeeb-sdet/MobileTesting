@@ -2,6 +2,7 @@ package com.epam.drivermanager.drivercapabilities.android;
 
 import com.epam.constants.AppInfo;
 import com.epam.constants.TestProps;
+import com.epam.constants.TestSetUp;
 import com.epam.utils.nodemanager.DeviceInfo;
 import com.epam.utils.nodemanager.NodeManager;
 import io.appium.java_client.android.options.UiAutomator2Options;
@@ -26,9 +27,17 @@ public class LocalAndroidCapabilities implements AndroidDeviceCapabilities {
                 .clearDeviceLogsOnStart()
                 .enablePerformanceLogging()
                 .printPageSourceOnFindFailure()
-                .setSystemPort(deviceInfo.getSystemPort())
-                .setMjpegServerPort(deviceInfo.getMjpegServerPort())
-                .setMjpegScreenshotUrl(deviceInfo.getMjpegScreenshotUrl());
+                .setUnlockStrategy("locksettings")
+                .setUnlockType("pin")
+                .setUnlockKey("279580")
+                .noReset();
+
+        if(TestProps.getTestSetUp() == TestSetUp.Platform.GRID){
+            options
+                    .setSystemPort(deviceInfo.getSystemPort())
+                    .setMjpegServerPort(deviceInfo.getMjpegServerPort())
+                    .setMjpegScreenshotUrl(deviceInfo.getMjpegScreenshotUrl());
+        }
 
         return options;
     }
