@@ -41,4 +41,4 @@ build/
 ### Project Directory ###
 logs
 reports
-src/test/java/com/epam/utils/poc
+#src/test/java/com/epam/utils/poc
